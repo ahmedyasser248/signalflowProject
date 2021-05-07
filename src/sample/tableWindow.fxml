@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="800.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.TableWindowController">
+   <children>
+      <TableView fx:id="tv" layoutX="20.0" layoutY="174.0" prefHeight="513.0" prefWidth="774.0">
+        <columns>
+          <TableColumn fx:id="forwardPathColumns" prefWidth="138.0" text="forward paths" />
+          <TableColumn fx:id="loopsColumn" prefWidth="118.0" text="loops" />
+            <TableColumn fx:id="gainsColumn" prefWidth="129.0" text="gains" />
+            <TableColumn fx:id="nonTouchingLoopsColumn" prefWidth="169.0" text="non touchong loops" />
+            <TableColumn fx:id="nonTouchingLoopsGains" prefWidth="219.0" text="non touching loops gains" />
+        </columns>
+      </TableView>
+   </children>
+</AnchorPane>
