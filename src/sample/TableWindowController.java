@@ -25,6 +25,8 @@ public class TableWindowController implements Initializable {
     private TableColumn<SingleRow,String>nonTouchingLoopsColumn;
     @FXML
     private TableColumn<SingleRow,String>nonTouchingLoopsGains;
+    @FXML
+    private TableColumn<SingleRow,String>deltasColumn;
 
 
     static double[][] graph;
@@ -62,56 +64,66 @@ public class TableWindowController implements Initializable {
         gainsColumn.setCellValueFactory(new PropertyValueFactory<SingleRow,String>("loopGains"));
         nonTouchingLoopsColumn.setCellValueFactory(new PropertyValueFactory<SingleRow,String>("nonTouchingLoops"));
         nonTouchingLoopsGains.setCellValueFactory(new PropertyValueFactory<SingleRow,String>("nonTouchingLoopsGains"));
+        deltasColumn.setCellValueFactory(new PropertyValueFactory<SingleRow,String>("delta"));
         ArrayList<SingleRow> singleRows =new ArrayList<>();
-        ArrayList<String> forwardPaths = solver.getForwardPaths();
+        String[] forwardPaths = solver.getForwardPaths();
         int maxI=0;
-        for (int  i =0 ; i<forwardPaths.size();i++){
+        for (int  i =0 ; i<forwardPaths.length;i++){
             SingleRow singleRow = new SingleRow();
-            singleRow.setForwardPath(forwardPaths.get(i));
+            singleRow.setForwardPath(forwardPaths[i]);
             singleRows.add(singleRow);
             maxI++;
         }
-        ArrayList<String>loops =solver.getLoops();
-        for (int  i = 0 ; i < loops.size();i++){
+        String [] loops =solver.getLoops();
+        for (int  i = 0 ; i < loops.length;i++){
             if(i<singleRows.size())
             {
-                singleRows.get(i).setLoop(loops.get(i));
+                singleRows.get(i).setLoop(loops[i]);
             }  else{
                 SingleRow singleRow = new SingleRow();
-                singleRow.setLoop(loops.get(i));
+                singleRow.setLoop(loops[i]);
                 singleRows.add(singleRow);
             }
         }
-        ArrayList<Double> loopsGains = solver.getLoopGains();
-        for (int  i = 0 ; i < loopsGains.size();i++){
+        Double [] loopsGains = solver.getLoopGains();
+        for (int  i = 0 ; i < loopsGains.length;i++){
             if(i<singleRows.size()){
-                singleRows.get(i).setLoopGains(loopsGains.get(i)+"");
+                singleRows.get(i).setLoopGains(loopsGains[i]+"");
             }
             else
             {
                 SingleRow singleRow = new SingleRow();
-                singleRow.setLoopGains(loopsGains.get(i)+"");
+                singleRow.setLoopGains(loopsGains[i]+"");
                 singleRows.add(singleRow);
             }
         }
-        ArrayList<String> nonTouchingLoops = solver.getNonTouchingLoops();
-        for (int  i = 0 ; i < nonTouchingLoops.size();i++){
+        String [] nonTouchingLoops = solver.getNonTouchingLoops();
+        for (int  i = 0 ; i < nonTouchingLoops.length;i++){
             if(i<singleRows.size()){
-                singleRows.get(i).setNonTouchingLoops(nonTouchingLoops.get(i));
+                singleRows.get(i).setNonTouchingLoops(nonTouchingLoops[i]);
             }else{
                 SingleRow singleRow = new SingleRow();
-                singleRow.setNonTouchingLoops(nonTouchingLoops.get(i));
+                singleRow.setNonTouchingLoops(nonTouchingLoops[i]);
                 singleRows.add(singleRow);
             }
         }
-        System.out.println(nonTouchingLoops.size());
-        ArrayList<Double>nonTouchingLoopsGains = solver.getNonTouchingGains();
-        for (int  i = 0 ; i < nonTouchingLoopsGains.size();i++){
+        Double [] nonTouchingLoopsGains = solver.getNonTouchingGains();
+        for (int  i = 0 ; i < nonTouchingLoopsGains.length;i++){
             if(i<singleRows.size()){
-                singleRows.get(i).setNonTouchingLoopsGains(nonTouchingLoopsGains.get(i)+"");
+                singleRows.get(i).setNonTouchingLoopsGains(nonTouchingLoopsGains[i]+"");
             }else{
                 SingleRow singleRow = new SingleRow();
-                singleRow.setNonTouchingLoopsGains(nonTouchingLoopsGains.get(i)+"");
+                singleRow.setNonTouchingLoopsGains(nonTouchingLoopsGains[i]+"");
+                singleRows.add(singleRow);
+            }
+        }
+        Double [] deltas = solver.getDeltas();
+        for (int  i = 0 ; i < deltas.length;i++){
+            if(i<singleRows.size()){
+                singleRows.get(i).setDelta(deltas[i]+"");
+            }else{
+                SingleRow singleRow = new SingleRow();
+                singleRow.setDelta(nonTouchingLoopsGains[i]+"");
                 singleRows.add(singleRow);
             }
         }

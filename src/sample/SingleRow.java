@@ -8,9 +8,18 @@ public class SingleRow {
     private SimpleStringProperty loopGains = new SimpleStringProperty("");
     private SimpleStringProperty nonTouchingLoops = new SimpleStringProperty("");
     private SimpleStringProperty nonTouchingLoopsGains = new SimpleStringProperty("");
+    private SimpleStringProperty delta = new SimpleStringProperty("");
 
     public void setForwardPath(String forwardPath) {
         this.forwardPath.set(forwardPath);
+    }
+
+    public void setDelta(String delta) {
+        this.delta.set(delta);
+    }
+
+    public String getDelta() {
+        return delta.get();
     }
 
     public void setLoop(String loop) {

@@ -17,6 +17,7 @@ public class Solver {
     private ArrayList<Integer[]> nonTouchingLoops;
     private ArrayList<Double> nonTouchingLoopGains;
 
+    private ArrayList<Double> deltas;
 
     private int numOfNodes;
     private double[][] graph;
@@ -35,6 +36,7 @@ public class Solver {
         loopsFlags = new ArrayList<>();
         nonTouchingLoops = new ArrayList<>();
         nonTouchingLoopGains = new ArrayList<>();
+        deltas = new ArrayList<>();
     }
 
 
@@ -230,66 +232,72 @@ public class Solver {
                     break;
             }
             deltaN += curr;
+            deltas.add(deltaN);
             numerator += deltaN * pathsGains.get(i);
         }
+        deltas.add(delta);
         return numerator / delta;
     }
 
     //Getters
-    public ArrayList<String> getLoops() {
-        ArrayList<String> loopsString = new ArrayList<>();
+    public String[] getLoops() {
+        String loopsString[] = new String[loops.size()];
+        int count = 0;
         for (ArrayList<Integer> arr : loops) {
+            loopsString[count] = "";
             for (int i = 0; i < arr.size(); i++) {
-                loopsString.add((arr.get(i) + 1) + " ");
+                loopsString[i] += (arr.get(i) + 1) + " ";
             }
+            count++;
         }
         return loopsString;
     }
 
-    public ArrayList<String> getNonTouchingLoops() {
-        ArrayList<String> temp = getLoops();
-        ArrayList<String> nonTouchingString = new ArrayList<>();
+    public String[] getNonTouchingLoops() {
+        String[] temp = getLoops();
+        String nonString[] = new String[nonTouchingLoops.size()];
+        int count = 0;
         for (Integer[] arr : nonTouchingLoops) {
+            nonString[count] = "";
+
             if (arr.length > 0)
-                nonTouchingString.add(temp.get(arr[0]));
+                nonString[count] += temp[arr[0]];
+
             for (int i = 1; i < arr.length; i++)
-                nonTouchingString.add( " , " + temp.get(arr[i]));
+                nonString[i] += " , " + temp[arr[i]];
+
+            count++;
         }
-        return nonTouchingString;
+        return nonString;
     }
 
-    public ArrayList<String> getForwardPaths() {
-        ArrayList<String> pathsString = new ArrayList<>();
+    public String[] getForwardPaths() {
+        String pathsString[] = new String[forwardPaths.size()];
+        int itr = 0;
         for (ArrayList<Integer> arr : forwardPaths) {
+            pathsString[itr] = "";
             for (int i = 0; i < arr.size(); i++) {
-                pathsString.add((arr.get(i) + 1) + " ");
+                pathsString[itr] += (arr.get(i) + 1) + " ";
             }
+            itr++;
         }
         return pathsString;
     }
 
-    public ArrayList<Double> getPathsGains() {
-        return pathsGains;
+    public Double[] getDeltas() {
+        return deltas.toArray(new Double[deltas.size()]);
     }
 
-    public ArrayList<Double> getLoopGains() {
-        return loopsGains;
+    public Double[] getForwardPathGains() {
+        return pathsGains.toArray(new Double[pathsGains.size()]);
     }
 
-    public ArrayList<Double> getNonTouchingGains() {
-        return nonTouchingLoopGains;
+    public Double[] getLoopGains() {
+        return loopsGains.toArray(new Double[loopsGains.size()]);
     }
-    public static void main(String [] args){
-        double [][]arr = new double[5][5];
-        for (int  i = 0 ; i < 5 ; i++){
-            for (int  j = 0 ; j<5;j++){
-                arr[i][j]=i+j;
-            }
-        }
-        Solver solver = new Solver(arr);
-        solver.solve();
-        System.out.println(solver.getLoopGains().size());
-        System.out.println(solver.getForwardPaths().size());
 
+    public Double[] getNonTouchingGains() {
+        return nonTouchingLoopGains.toArray(new Double[nonTouchingLoopGains.size()]);
     }
+
 }
