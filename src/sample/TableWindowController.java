@@ -123,7 +123,7 @@ public class TableWindowController implements Initializable {
                 singleRows.get(i).setDelta(deltas[i]+"");
             }else{
                 SingleRow singleRow = new SingleRow();
-                singleRow.setDelta(nonTouchingLoopsGains[i]+"");
+                singleRow.setDelta(deltas[i]+"");
                 singleRows.add(singleRow);
             }
         }

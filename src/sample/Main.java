@@ -291,7 +291,7 @@ public class Main extends Application {
              * if "fx:controller" is not set in fxml
              * fxmlLoader.setController(NewWindowController);
              */
-            Scene scene = new Scene(fxmlLoader.load(), 800, 800);
+            Scene scene = new Scene(fxmlLoader.load(), 1000, 800);
             Stage stage = new Stage();
             stage.setTitle("New Window");
             stage.setScene(scene);
