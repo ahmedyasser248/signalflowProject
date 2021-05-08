@@ -31,7 +31,7 @@ public class Main extends Application {
     Button NodeButton = new Button("Add a Node");
     TextField Field = new TextField();
     Button joinButton = new Button("Join");
-    Button rootButton = new Button("Pick the beginning");
+   // Button rootButton = new Button("Pick the beginning");
     Button beginButton = new Button("Start Simulation");
     public Shape[] shapes = new Shape[500];  // Contains shapes the user has drawn.
     public int shapeCount = 0; // Number of shapes that the user has drawn.
@@ -85,7 +85,7 @@ public class Main extends Application {
             if(!this.joinn && enterGained){
                 NodeButton.setDisable(false);
                 beginButton.setDisable(false);
-                rootButton.setDisable(false);
+
                 enterGained = false;
             }
             Field.setDisable(true);
@@ -100,7 +100,7 @@ public class Main extends Application {
         this.joinn=true;
         NodeButton.setDisable(true);
         beginButton.setDisable(true);
-        rootButton.setDisable(true);
+
     }
     public void first(){
         this.selectroot = true;
@@ -157,7 +157,7 @@ public class Main extends Application {
             a.setContentText("Click on the two nodes and then Enter the branch Gain please");
             a.show();
             joinButton.setDisable(true);});
-        rootButton.setOnAction( (e) -> first() );
+
         beginButton.setOnAction( (e) -> convertTo2DArray(counter,joinXY,gains) );
         beginButton.setStyle("-fx-background-color: Green");
         Field.setPromptText("Gain");
@@ -166,7 +166,7 @@ public class Main extends Application {
         HBox tools = new HBox(10);
         tools.getChildren().add(NodeButton);
         tools.getChildren().add(joinButton);
-        tools.getChildren().add(rootButton);
+
         tools.getChildren().add(beginButton);
         tools.getChildren().add(Field);
         tools.setStyle("-fx-border-width: 5px; -fx-border-color: transparent; -fx-background-color: lightgray");
