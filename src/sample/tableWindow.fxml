@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="800.0" prefWidth="943.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.TableWindowController">
    <children>
@@ -16,5 +18,11 @@
             <TableColumn fx:id="deltasColumn" prefWidth="100.0" text="delta" />
         </columns>
       </TableView>
+      <Label fx:id="lb1" layoutX="179.0" layoutY="724.0" text="Transfer function :">
+         <font>
+            <Font name="System Bold" size="13.0" />
+         </font>
+      </Label>
+      <Label fx:id="lb2" layoutX="338.0" layoutY="724.0" />
    </children>
 </AnchorPane>

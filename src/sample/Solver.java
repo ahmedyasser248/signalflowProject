@@ -168,22 +168,17 @@ public class Solver {
         return true;
     }
 
-    private boolean isNonTouchingWithPath(ArrayList<Integer> arr, int fbNum) {
-        int flag;
-        // looping over columns
+    private boolean isNonTouchingLoopWithPath(int loopNum, int pathNum) {
+        boolean flag = true;
+        boolean[] path = pathsFlags.get(pathNum);
+        boolean[] loop = loopsFlags.get(loopNum);
         for (int i = 0; i < numOfNodes; i++) {
-            flag = 0;
-            // looping over rows
-            for (int j = 0; j < arr.size(); j++) {
-                if (loopsFlags.get(arr.get(j))[i])
-                    flag++;
+            if (path[i] && loop[i]) {
+                flag = false;
+                break;
             }
-            if (pathsFlags.get(fbNum)[i])
-                flag++;
-            if (flag > 1)
-                return false;
         }
-        return true;
+        return flag;
     }
 
     private double calcNonTouchingGain(ArrayList<Integer> arr) {
@@ -201,42 +196,41 @@ public class Solver {
             loopLabels.get(loopLabels.size() - 1).add(i);
         }
         generateNonTouching(loopLabels, 1);
-        double curr = 0;
+
+        double sum = 0;
         double delta = 0;
-        int e = -1;
-        int nth = 1;
+        double oneLoopSum = 0;
+        for (int i = 0; i < loopsGains.size(); i++) {
+            oneLoopSum += loopsGains.get(i);
+        }
+        double nonTouchingLoopsSum = 0;
         for (int i = 0; i < nonTouchingLoops.size(); i++) {
-            if (nonTouchingLoops.get(i).length == nth) {
-                curr += nonTouchingLoopGains.get(i);
+            if (nonTouchingLoops.get(i).length % 2  == 0) {
+                nonTouchingLoopsSum += nonTouchingLoopGains.get(i);
             } else {
-                delta += e * curr;
-                e *= -1;
-                ++nth;
+                nonTouchingLoopsSum += (-1) * nonTouchingLoopGains.get(i);
             }
 
         }
-        delta = 1 - delta;
 
-        double numerator = 0;
+        delta = 1 - oneLoopSum + nonTouchingLoopsSum;
+
+        double nominatorTerm = 0;
         double deltaN;
 
         for (int i = 0; i < forwardPaths.size(); i++) {
-            deltaN = 1;
-            curr = 0;
-            e = -1;
-            for (int j = 0; j < nonTouchingLoops.size(); j++) {
-                if (isNonTouchingWithPath(new ArrayList<Integer>(Arrays.asList(nonTouchingLoops.get(j))), i)) {
-                    curr += e * nonTouchingLoopGains.get(j);
-                    e *= -1;
-                } else
-                    break;
+            sum = 0;
+            for (int j = 0; j < loops.size(); j++) {
+                if (isNonTouchingLoopWithPath(j, i)) {
+                    sum += loopsGains.get(j);
+                }
             }
-            deltaN += curr;
+            deltaN = 1 - sum;
             deltas.add(deltaN);
-            numerator += deltaN * pathsGains.get(i);
+            nominatorTerm += deltaN * pathsGains.get(i);
         }
         deltas.add(delta);
-        return numerator / delta;
+        return nominatorTerm / delta;
     }
 
     //Getters

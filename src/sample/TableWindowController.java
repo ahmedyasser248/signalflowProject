@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,6 +28,10 @@ public class TableWindowController implements Initializable {
     private TableColumn<SingleRow,String>nonTouchingLoopsGains;
     @FXML
     private TableColumn<SingleRow,String>deltasColumn;
+    @FXML
+    Label lb1;
+    @FXML
+    Label lb2;
 
 
     static double[][] graph;
@@ -58,7 +63,7 @@ public class TableWindowController implements Initializable {
 
         }*/
         solver = new Solver(graph);
-        solver.solve();
+       double result= solver.solve();
         forwardPathColumns.setCellValueFactory(new PropertyValueFactory<SingleRow,String>("forwardPath"));
         loopsColumn.setCellValueFactory(new PropertyValueFactory<SingleRow,String>("loop"));
         gainsColumn.setCellValueFactory(new PropertyValueFactory<SingleRow,String>("loopGains"));
@@ -130,5 +135,6 @@ public class TableWindowController implements Initializable {
         ObservableList<SingleRow> data = FXCollections.observableArrayList();
         data.addAll(singleRows);
         tv.setItems(data);
+        lb2.setText(result+"");
     }
 }
